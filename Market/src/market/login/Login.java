@@ -8,6 +8,8 @@ public class Login {
 	private User currentUser;
 	private static Login instance;
 	
+	
+	
 	private Login() {
 		users = new ArrayList<User>();
 	}
@@ -24,6 +26,14 @@ public class Login {
 		return currentUser;
 	}
 	
+	public void setCurrentUser(User u) {
+		this.currentUser = u;
+	}
+
+	public ArrayList<User> getUsers(){
+		return users;
+	}
+	
 	public void logout() {
 		currentUser = null;
 	}
@@ -32,6 +42,7 @@ public class Login {
 		if (currentUser != null) {
 			throw new IllegalArgumentException("Cannot log in when a user is already logged in");
 		}
+		
 		
 		User userBasedOnUsername = null;
 		
@@ -45,11 +56,13 @@ public class Login {
 			throw new IllegalArgumentException("There is no User with that username");
 		}
 		
-		if (userBasedOnUsername.isCorrectPassword(password)) {
-			currentUser = userBasedOnUsername;
-		}
-		else {
-			throw new IllegalArgumentException("Invalid password");
+		if (userBasedOnUsername != null) {
+			if (userBasedOnUsername.isCorrectPassword(password)) {
+				currentUser = userBasedOnUsername;
+			}
+			else {
+				throw new IllegalArgumentException("Invalid password");
+			}
 		}
 	}
 	

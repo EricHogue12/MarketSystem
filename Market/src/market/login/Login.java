@@ -7,6 +7,7 @@ public class Login {
 	private ArrayList<User> users;
 	private User currentUser;
 	private static Login instance;
+	private boolean isManagerInitialized = false;
 	
 	
 	
@@ -29,6 +30,38 @@ public class Login {
 	public void setCurrentUser(User u) {
 		this.currentUser = u;
 	}
+	
+	public void initializeManager() {
+		if (!isManagerInitialized) {
+			Manager m = new Manager("Eric", "Hogue");
+			users.add(m);
+			isManagerInitialized = true;
+		}
+	}
+	
+	
+	
+	public void addCustomer(String firstName, String lastName, String username, String password) {
+		Customer c = new Customer(firstName, lastName, username, password);
+		
+		for (int i = 0; i < users.size(); i++) {
+			if (username.equals(users.get(i).getUsername())){
+				throw new IllegalArgumentException("Username is taken");
+			}
+		}
+		
+		users.add(c);
+	}
+	
+	public void deleteCustomer(String username) {
+		for (int i = 0; i < users.size(); i++) {
+			if (username.equals(users.get(i).getUsername())) {
+				users.remove(users.get(i));
+			}
+		}
+	}
+	
+	
 
 	public ArrayList<User> getUsers(){
 		return users;

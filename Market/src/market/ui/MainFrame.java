@@ -3,6 +3,7 @@ package market.ui;
 import java.awt.Color;
 
 
+
 import java.awt.EventQueue;
 import java.awt.Font;
 
@@ -127,6 +128,10 @@ public class MainFrame extends JFrame {
 				if (u.length() > 0 && p.length() > 0) {
 					try {
 						loginManager.login(u, p);
+						CustomerView cv = new CustomerView();
+						cv.setExtendedState(JFrame.MAXIMIZED_BOTH);
+						cv.setVisible(true);
+						dispose();
 					}
 					catch(Exception e1) {
 						txtLoginMessage.setText(e1.getMessage());
@@ -134,8 +139,22 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
+		
 		btnOk.setBounds(645, 450, 91, 23);
 		contentPane.add(btnOk);
+		
+		JButton btnBack = new JButton("BACK");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FirstFrame ff = new FirstFrame();
+				ff.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				ff.setVisible(true);
+				dispose();
+			}
+		});
+		
+		btnBack.setBounds(30, 830, 91, 23);
+		contentPane.add(btnBack);
 		
 		
 		

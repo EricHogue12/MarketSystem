@@ -3,17 +3,14 @@ package market.login;
 // Each user should have a unique user name
 public class User {
 	
-	private String username;
-	private String password;
 	private String firstName;
 	private String lastName;
+	private String username;
+	private String password;
 	
-	public User(String username, String password, String firstName, String lastName) {
+	public User(String firstName, String lastName, String username, String password) {
 		if (Customer.customerCounter >= Customer.MAX_CUSTOMERS) {
 			throw new IllegalArgumentException("Customer limit reached");
-		}
-		if (Manager.managerCounter >= Manager.MAX_MANAGERS) {
-			throw new IllegalArgumentException("Manager limit reached");
 		}
 		if (username == null || "".equals(username)) {
 			throw new IllegalArgumentException("Illegal username");
@@ -56,6 +53,13 @@ public class User {
 	
 	public void setLastName(String l) {
 		this.lastName = l;
+	}
+	
+	public void setPassword(String p) {
+		if ("".equals(p) || p == null) {
+			throw new IllegalArgumentException("Password cannot be null or empty");
+		}
+		this.password = p;
 	}
 	
 	public boolean isCorrectPassword(String password) {

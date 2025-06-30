@@ -8,31 +8,37 @@ public class FoodPriceSort implements ISort {
 
 	public void sort(ArrayList<Food> foods){
 		for (int i = 0; i < foods.size() - 1; i++) {
-			int maxIndex = i;
+			int minIndex = i;
 			for (int j = i+1; j < foods.size(); j++) {
-				if (foods.get(j).getPrice() > foods.get(maxIndex).getPrice()) {
-					maxIndex = j;
+				if (foods.get(j).getPrice() < foods.get(minIndex).getPrice()) {
+					minIndex = j;
 				}
 			}
-			if (maxIndex != i) {
+			if (minIndex != i) {
+				Food tempMax = foods.get(minIndex);
 				Food temp = foods.remove(i);
-				foods.add(i, foods.get(maxIndex));
-				foods.remove(maxIndex);
-				foods.add(maxIndex, temp);
+				foods.add(i, tempMax);
+				foods.remove(minIndex);
+				foods.add(minIndex, temp);
 				
 			}
 		}
 	}
 	
 	public void omitDuplicates(ArrayList<Food> foods){
-		double[] temp = new double[foods.size()];
-		for (Food f: foods) {
-			for (int i = 0; i < temp.length; i++) {
-				if (f.getPrice() == temp[i]) {
-					foods.remove(f);
+		for (int i = 0; i < foods.size(); i++) {
+			for (int j = i + 1; j < foods.size(); j++) {
+				if (foods.get(i) != null && foods.get(j) != null) {
+					if (foods.get(i).getPrice() == foods.get(j).getPrice()) {
+						foods.remove(j);
+						foods.add(j, null);
+					}
 				}
 			}
 		}
+		
+		while(foods.remove(null));
+		
 	}
 	
 }

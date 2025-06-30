@@ -16,8 +16,9 @@ public class FoodStockSort implements ISort {
 				}
 			}
 			if (maxIndex != i) {
+				Food tempMax = foods.get(maxIndex);
 				Food temp = foods.remove(i);
-				foods.add(i, foods.get(maxIndex));
+				foods.add(i, tempMax);
 				foods.remove(maxIndex);
 				foods.add(maxIndex, temp);
 				
@@ -26,13 +27,18 @@ public class FoodStockSort implements ISort {
 	}
 	
 	public void omitDuplicates(ArrayList<Food> foods){
-		int[] temp = new int[foods.size()];
-		for (Food f: foods) {
-			for (int i = 0; i < temp.length; i++) {
-				if (f.getStock() == temp[i]) {
-					foods.remove(f);
+		for (int i = 0; i < foods.size(); i++) {
+			for (int j = i + 1; j < foods.size(); j++) {
+				if (foods.get(i) != null && foods.get(j) != null) {
+					if (foods.get(i).getStock() == foods.get(j).getStock()) {
+						foods.remove(j);
+						foods.add(j, null);
+					}
 				}
 			}
 		}
+		
+		while(foods.remove(null));
+		
 	}
 }

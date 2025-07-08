@@ -25,6 +25,18 @@ public class Stock {
 		return instance;
 	}
 	
+	public int getStockCount() {
+		int ret = 0;
+		for (Food f: foods) {
+			ret += f.getStock();
+		}
+		return ret;
+	}
+	
+	public int itemCount() {
+		return foods.size();
+	}
+	
 	public ArrayList<Food> getFoods() {
 		return foods;
 	}
@@ -317,7 +329,6 @@ public class Stock {
 		else {
 			throw new IllegalArgumentException("Invalid food category");
 		}
-		
 		
 	}
 	

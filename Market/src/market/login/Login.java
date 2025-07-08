@@ -23,6 +23,7 @@ public class Login {
 		return instance;
 	}
 	
+	
 	public User getCurrentUser() {
 		return currentUser;
 	}
@@ -41,8 +42,8 @@ public class Login {
 	
 	
 	
-	public void addCustomer(String firstName, String lastName, String username, String password) {
-		Customer c = new Customer(firstName, lastName, username, password);
+	public void addCustomer(String firstName, String lastName, String username, String password, double balance) {
+		Customer c = new Customer(firstName, lastName, username, password, balance);
 		
 		for (int i = 0; i < users.size(); i++) {
 			if (username.equals(users.get(i).getUsername())){

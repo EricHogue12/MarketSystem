@@ -3,6 +3,7 @@ package market.ui;
 import java.awt.Color;
 
 
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -35,6 +36,12 @@ public class ManagerView extends JFrame {
 	private JPanel contentPane;
 	private JLabel customerFirstName;
 	private JLabel customerLastName;
+	
+	private JLabel t1Stock;
+	private JLabel t1Items;
+	private JLabel t1Sales;
+	private JLabel t1Customer;
+	private JLabel t1Food;
 
 	/**
 	 * Launch the application.
@@ -471,6 +478,9 @@ public class ManagerView extends JFrame {
 					lstockTxt.setText(String.valueOf(stockManager.getBakery().get(bakeList.getSelectedIndex()).getStock()));
 				}
 				
+				t1Stock.setText(String.valueOf(stockManager.getStockCount()));
+
+				
 			}
 		});
 		
@@ -497,6 +507,9 @@ public class ManagerView extends JFrame {
 					lstockTxt.setText(String.valueOf(stockManager.getBakery().get(bakeList.getSelectedIndex()).getStock()));
 				}
 				
+				t1Stock.setText(String.valueOf(stockManager.getStockCount()));
+
+				
 			}
 		});
 		
@@ -522,6 +535,8 @@ public class ManagerView extends JFrame {
 					stockManager.reduceFoodStock(bakeList.getSelectedIndex(), "Bakery");
 					lstockTxt.setText(String.valueOf(stockManager.getBakery().get(bakeList.getSelectedIndex()).getStock()));
 				}
+				
+				t1Stock.setText(String.valueOf(stockManager.getStockCount()));
 				
 			}
 		});
@@ -668,6 +683,9 @@ public class ManagerView extends JFrame {
 					JOptionPane.showMessageDialog(null, "Enter a proper food category");
 				}
 				
+				t1Stock.setText(String.valueOf(stockManager.getStockCount()));
+				t1Items.setText(String.valueOf(stockManager.itemCount()));
+				
 			}
 		});
 		
@@ -696,6 +714,9 @@ public class ManagerView extends JFrame {
 				else {
 					
 				}
+				
+				t1Stock.setText(String.valueOf(stockManager.getStockCount()));
+				t1Items.setText(String.valueOf(stockManager.itemCount()));
 			}
 		});
 		
@@ -841,8 +862,20 @@ public class ManagerView extends JFrame {
 				String lastName = JOptionPane.showInputDialog("Customer Last Name: ");
 				String username = JOptionPane.showInputDialog("Customer Username: ");
 				String password = JOptionPane.showInputDialog("Customer Initial Password: ");
+				String balance = JOptionPane.showInputDialog("Customer Initial Balance (in $): ");
+				
 				try {
-					loginManager.addCustomer(firstName, lastName, username, password);
+					Integer.parseInt(balance);
+				}
+				catch(Exception e1) {
+					JOptionPane.showMessageDialog(null, "Enter a number for the balance");
+				}
+				
+				int balance1 = Integer.parseInt(balance);
+				double balance2 = (double)(balance1);
+				
+				try {
+					loginManager.addCustomer(firstName, lastName, username, password, balance2);
 					listModel.addElement(username);
 					firstNameList.add(firstName);
 					lastNameList.add(lastName);
@@ -870,13 +903,66 @@ public class ManagerView extends JFrame {
 				}
 			}
 		});
+		
 		btnRemoveCustomer.setBounds(235, 60, 50, 40);
 		btnRemoveCustomer.setFont(new Font("Arial", Font.BOLD, 28));
 		btnRemoveCustomer.setForeground(Color.RED);
 		contentPane.add(btnRemoveCustomer);
 		
 		
+		JLabel tStock = new JLabel("Total Stock:");
+		JLabel tItems = new JLabel("Total #Items:");
+		JLabel tSales = new JLabel("Total Sales:");
+		JLabel tCustomer = new JLabel("#1 Customer:");
+		JLabel tFood = new JLabel("#1 Food Type:");
 		
+		
+		Font statFont = new Font("Serif", Font.PLAIN, 35);
+		
+		tStock.setBounds(15, 50, 300, 50);
+		tItems.setBounds(15, 190, 300, 50);
+		tSales.setBounds(15, 330, 300, 50);
+		tCustomer.setBounds(15, 470, 300, 50);
+		tFood.setBounds(15, 610, 300, 50);
+		
+		tStock.setFont(statFont);
+		tItems.setFont(statFont);
+		tSales.setFont(statFont);
+		tCustomer.setFont(statFont);
+		tFood.setFont(statFont);
+
+		
+		MarketStatistics.add(tStock);
+		MarketStatistics.add(tItems);
+		MarketStatistics.add(tSales);
+		MarketStatistics.add(tCustomer);
+		MarketStatistics.add(tFood);
+		
+		t1Stock = new JLabel(String.valueOf(stockManager.getStockCount()));
+		t1Items = new JLabel(String.valueOf(stockManager.itemCount()));
+		t1Sales = new JLabel("");
+		t1Customer = new JLabel("");
+		t1Food = new JLabel("");
+		
+		Font statFont1 = new Font("SansSerif", Font.PLAIN, 20);
+		
+		t1Stock.setBounds(30, 120, 300, 50);
+		t1Items.setBounds(30, 260, 300, 50);
+		t1Sales.setBounds(30, 400, 300, 50);
+		t1Customer.setBounds(30, 540, 300, 50);
+		t1Food.setBounds(30, 680, 300, 50);
+		
+		t1Stock.setFont(statFont1);
+		t1Items.setFont(statFont1);
+		t1Sales.setFont(statFont1);
+		t1Customer.setFont(statFont1);
+		t1Food.setFont(statFont1);
+		
+		MarketStatistics.add(t1Stock);
+		MarketStatistics.add(t1Items);
+		MarketStatistics.add(t1Sales);
+		MarketStatistics.add(t1Customer);
+		MarketStatistics.add(t1Food);
 		
 		
 	}

@@ -7,10 +7,14 @@ public class User {
 	private String lastName;
 	private String username;
 	private String password;
+	private double balance;
 	
-	public User(String firstName, String lastName, String username, String password) {
+	public User(String firstName, String lastName, String username, String password, double balance) {
 		if (Customer.customerCounter >= Customer.MAX_CUSTOMERS) {
 			throw new IllegalArgumentException("Customer limit reached");
+		}
+		if (balance < 0 || balance > 10000.00) {
+			throw new IllegalArgumentException("Balance not allowed");
 		}
 		if (username == null || "".equals(username)) {
 			throw new IllegalArgumentException("Illegal username");
@@ -32,6 +36,7 @@ public class User {
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.balance = balance;
 		
 	}
 	
@@ -45,6 +50,10 @@ public class User {
 	
 	public String getLastName() {
 		return lastName;
+	}
+	
+	public double getBalance() {
+		return balance;
 	}
 	
 	public void setFirstName(String f) {
@@ -65,5 +74,6 @@ public class User {
 	public boolean isCorrectPassword(String password) {
 		return password.equals(this.password);
 	}
+	
 	
 }

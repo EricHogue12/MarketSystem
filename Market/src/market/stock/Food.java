@@ -47,7 +47,7 @@ public class Food {
 	
 	
 	public double getPrice() {
-		return price;
+		return Math.round(price * 100.00) / 100.00;
 	}
 	public boolean getByWeight() {
 		return byWeight;

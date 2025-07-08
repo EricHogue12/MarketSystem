@@ -227,6 +227,34 @@ public class Stock {
 		
 	}
 	
+	public void reduceFoodPrice(int idx, String category){
+		
+		if (idx < 0 || idx >= foods.size()) {
+			throw new IllegalArgumentException("Invalid index");
+		}
+		
+		if ("Vegetable".equals(category)) {
+			getVegetables().get(idx).setPrice(0.25);
+		}
+		else if ("Fruit".equals(category)) {
+			getFruits().get(idx).setPrice(0.25);
+		}
+		else if ("Meat".equals(category)) {
+			getMeats().get(idx).setPrice(0.25);
+		}
+		else if ("Dairy".equals(category)) {
+			getDairy().get(idx).setPrice(0.25);
+		}
+		else if ("Bakery".equals(category)) {
+			getBakery().get(idx).setPrice(0.25);
+		}
+		else {
+			throw new IllegalArgumentException("Invalid food category");
+		}
+		
+		
+	}
+	
 	public void incrementFoodStock(int idx, String category){
 		
 		if (idx < 0 || idx >= foods.size()) {
@@ -260,31 +288,59 @@ public class Stock {
 		
 	}
 	
-	public void decrementFoodStock(int idx, String category){
+	public void incrementFoodStockTen(int idx, String category){
 		
 		if (idx < 0 || idx >= foods.size()) {
 			throw new IllegalArgumentException("Invalid index");
 		}
 		
 		if ("Vegetable".equals(category)) {
-			int newStock = getVegetables().get(idx).getStock() - 1;
+			int newStock = getVegetables().get(idx).getStock() + 10;
 			getVegetables().get(idx).setStock(newStock);
 		}
 		else if ("Fruit".equals(category)) {
-			int newStock = getFruits().get(idx).getStock() - 1;
+			int newStock = getFruits().get(idx).getStock() + 10;
 			getFruits().get(idx).setStock(newStock);
 		}
 		else if ("Meat".equals(category)) {
-			int newStock = getMeats().get(idx).getStock() - 1;
+			int newStock = getMeats().get(idx).getStock() + 10;
 			getMeats().get(idx).setStock(newStock);
 		}
 		else if ("Dairy".equals(category)) {
-			int newStock = getDairy().get(idx).getStock() - 1;
+			int newStock = getDairy().get(idx).getStock() + 10;
 			getDairy().get(idx).setStock(newStock);
 		}
 		else if ("Bakery".equals(category)) {
-			int newStock = getBakery().get(idx).getStock() - 1;
+			int newStock = getBakery().get(idx).getStock() + 10;
 			getBakery().get(idx).setStock(newStock);
+		}
+		else {
+			throw new IllegalArgumentException("Invalid food category");
+		}
+		
+		
+	}
+	
+	public void reduceFoodStock(int idx, String category){
+		
+		if (idx < 0 || idx >= foods.size()) {
+			throw new IllegalArgumentException("Invalid index");
+		}
+		
+		if ("Vegetable".equals(category)) {
+			getVegetables().get(idx).setStock(1);
+		}
+		else if ("Fruit".equals(category)) {
+			getFruits().get(idx).setStock(1);
+		}
+		else if ("Meat".equals(category)) {
+			getMeats().get(idx).setStock(1);
+		}
+		else if ("Dairy".equals(category)) {
+			getDairy().get(idx).setStock(1);
+		}
+		else if ("Bakery".equals(category)) {
+			getBakery().get(idx).setStock(1);
 		}
 		else {
 			throw new IllegalArgumentException("Invalid food category");
@@ -296,50 +352,67 @@ public class Stock {
 	
 	
 	
-	public ArrayList<Food> sorted(String sortField, String category) {
-		ArrayList<Food> ret = new ArrayList<Food>();
-		
-		if ("Vegetable".equals(category)) {
-			ret = getVegetables();
-		}
-		else if ("Fruit".equals(category)) {
-			ret = getFruits();
-		}
-		else if ("Meat".equals(category)) {
-			ret = getMeats();
-		}
-		else if ("Dairy".equals(category)) {
-			ret = getDairy();
-		}
-		else if ("Bakery".equals(category)) {
-			ret = getBakery();
-		}
-		else {
-			throw new IllegalArgumentException("Invalid food category for sort");
-		}
+	public String[] sorted(String sortField, String category) {
+		String[] ret;
 		
 		
 		if ("name".equals(sortField)) {
 			FoodNameSort n = new FoodNameSort();
-			n.sort(ret);
+			n.sort(foods);
 		}
 		else if ("price".equals(sortField)) {
 			FoodPriceSort p = new FoodPriceSort();
-			p.sort(ret);
+			p.sort(foods);
 		}
 		else if ("stock".equals(sortField)) {
 			FoodStockSort s = new FoodStockSort();
-			s.sort(ret);
+			s.sort(foods);
 		}
 		else {
 			throw new IllegalArgumentException("Invalid sort instructions");
 		}
 		
+		if ("Vegetable".equals(category)) {
+			ret = new String[getVegetables().size()];
+			for (int i = 0; i < getVegetables().size(); i++) {
+				ret[i] = getVegetables().get(i).getName();
+			}
+		}
+		else if ("Fruit".equals(category)) {
+			ret = new String[getFruits().size()];
+			for (int i = 0; i < getFruits().size(); i++) {
+				ret[i] = getFruits().get(i).getName();
+			}
+		}
+		else if ("Meat".equals(category)) {
+			ret = new String[getMeats().size()];
+			for (int i = 0; i < getMeats().size(); i++) {
+				ret[i] = getMeats().get(i).getName();
+			}
+		}
+		else if ("Dairy".equals(category)) {
+			ret = new String[getDairy().size()];
+			for (int i = 0; i < getDairy().size(); i++) {
+				ret[i] = getDairy().get(i).getName();
+			}
+		}
+		else if ("Bakery".equals(category)) {
+			ret = new String[getBakery().size()];
+			for (int i = 0; i < getBakery().size(); i++) {
+				ret[i] = getBakery().get(i).getName();
+			}
+		}
+		else {
+			throw new IllegalArgumentException("Invalid food category for sort");
+		}
+		
 		return ret;
+		
 	}
 	
 	
-	public void clearStock() {
+	
+	public void resetStock() {
 		instance = new Stock();
 	}
 	

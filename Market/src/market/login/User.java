@@ -8,6 +8,7 @@ public class User {
 	private String username;
 	private String password;
 	private double balance;
+	private double initialBalance;
 	
 	public User(String firstName, String lastName, String username, String password, double balance) {
 		if (Customer.customerCounter >= Customer.MAX_CUSTOMERS) {
@@ -37,6 +38,7 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.balance = balance;
+		this.initialBalance = balance;
 		
 	}
 	
@@ -54,6 +56,14 @@ public class User {
 	
 	public double getBalance() {
 		return balance;
+	}
+	
+	public double getSpendings() {
+		return initialBalance - balance;
+	}
+	
+	public void setBalance(double b) {
+		this.balance = b;
 	}
 	
 	public void setFirstName(String f) {

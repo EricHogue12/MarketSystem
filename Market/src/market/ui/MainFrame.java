@@ -90,7 +90,7 @@ public class MainFrame extends JFrame {
 		txtPassword.setColumns(10);
 		
 		txtLoginMessage = new JLabel("");
-		txtLoginMessage.setBounds(600, 500, 304, 20);
+		txtLoginMessage.setBounds(600, 500, 500, 20);
 		txtLoginMessage.setFont(font2);
 		txtLoginMessage.setForeground(new Color(178, 34, 34));
 		contentPane.add(txtLoginMessage);

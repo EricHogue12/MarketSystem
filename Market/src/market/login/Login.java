@@ -23,6 +23,28 @@ public class Login {
 		return instance;
 	}
 	
+	public String getBestCustomer() {
+		if (users.size() >= 2) {
+			double maxSpendings = users.get(0).getSpendings();
+			int idx = 0;
+			for (int i = 1; i < users.size(); i++) {
+				if (users.get(i).getSpendings() > maxSpendings) {
+					maxSpendings = users.get(i).getSpendings();
+					idx = i;
+				}
+			}
+			
+			if (maxSpendings == 0.0) {
+				return "Inconclusive";
+			}
+			
+			return users.get(idx).getUsername();
+		}
+		else {
+			return "Inconclusive";
+		}
+	}
+	
 	
 	public User getCurrentUser() {
 		return currentUser;

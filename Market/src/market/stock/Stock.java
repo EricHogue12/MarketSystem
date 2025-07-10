@@ -12,9 +12,16 @@ public class Stock {
 	
 	private static Stock instance;
 	private ArrayList<Food> foods;
+	private double sales;
+	private int vegeCounter;
+	private int fruitCounter;
+	private int meatCounter;
+	private int dairyCounter;
+	private int bakeCounter;
 	
 	private Stock() {
 		foods = new ArrayList<Food>();
+		sales = 0.0;
 	}
 	
 	public static synchronized Stock getInstance() {
@@ -35,6 +42,51 @@ public class Stock {
 	
 	public int itemCount() {
 		return foods.size();
+	}
+	
+	public void updateSales(double s) {
+		sales = sales + s;
+	}
+	
+	public double getSales() {
+		return sales;
+	}
+	
+	public void incrementVegeCounter() {
+		vegeCounter++;
+	}
+	public void incrementFruitCounter() {
+		fruitCounter++;
+	}
+	public void incrementMeatCounter() {
+		meatCounter++;
+	}
+	public void incrementDairyCounter() {
+		dairyCounter++;
+	}
+	public void incrementBakeCounter() {
+		bakeCounter++;
+	}
+	
+	public String getMostBoughtFood() {
+		if (vegeCounter > fruitCounter && vegeCounter > meatCounter && vegeCounter > dairyCounter && vegeCounter > bakeCounter) {
+			return "Vegetable";
+		}
+		else if (fruitCounter > vegeCounter && fruitCounter > meatCounter && fruitCounter > dairyCounter && fruitCounter > bakeCounter) {
+			return "Fruit";
+		}
+		else if (meatCounter > vegeCounter && meatCounter > fruitCounter && meatCounter > dairyCounter && meatCounter > bakeCounter) {
+			return "Meat";
+		}
+		else if (dairyCounter > vegeCounter && dairyCounter > fruitCounter && dairyCounter > meatCounter && dairyCounter > bakeCounter) {
+			return "Dairy";
+		}
+		else if (bakeCounter > vegeCounter && bakeCounter > fruitCounter && bakeCounter > meatCounter && bakeCounter > dairyCounter) {
+			return "Bakery";
+		}
+		else {
+			return "Inconclusive";
+		}
 	}
 	
 	public ArrayList<Food> getFoods() {

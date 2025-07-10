@@ -8,6 +8,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -70,6 +71,8 @@ public class ManagerView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		DecimalFormat salesFormat = new DecimalFormat("0.00");
 		
 		JPanel CustomerDirectory = new JPanel();
 		JPanel stock = new JPanel();
@@ -628,10 +631,10 @@ public class ManagerView extends JFrame {
 						JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 0);
 				
 				if (weight == JOptionPane.YES_OPTION) {
-					byWeight = true;
+					byWeight = false;
 				}
 				else {
-					byWeight = false;
+					byWeight = true;
 				}
 				
 				if ("Vegetable".equals(category)) {
@@ -940,9 +943,9 @@ public class ManagerView extends JFrame {
 		
 		t1Stock = new JLabel(String.valueOf(stockManager.getStockCount()));
 		t1Items = new JLabel(String.valueOf(stockManager.itemCount()));
-		t1Sales = new JLabel("");
-		t1Customer = new JLabel("");
-		t1Food = new JLabel("");
+		t1Sales = new JLabel(String.valueOf(salesFormat.format(stockManager.getSales())));
+		t1Customer = new JLabel(loginManager.getBestCustomer());
+		t1Food = new JLabel(stockManager.getMostBoughtFood());
 		
 		Font statFont1 = new Font("SansSerif", Font.PLAIN, 20);
 		

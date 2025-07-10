@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -60,8 +61,11 @@ public class CustomerView extends JFrame {
 		
 		contentPane.setLayout(null);
 		
+		
 		Login loginManager = Login.getInstance();
 		Stock stockManager = Stock.getInstance();
+		
+		DecimalFormat balanceFormat = new DecimalFormat("0.00");
 		
 		JButton btnSignOut = new JButton("SIGN OUT");
 		btnSignOut.addActionListener(new ActionListener() {
@@ -76,6 +80,7 @@ public class CustomerView extends JFrame {
 		btnSignOut.setBounds(30, 845, 100, 23);
 		contentPane.add(btnSignOut);
 		
+
 		
 		JButton btnChangePassword = new JButton("CHANGE PASSWORD");
 		btnChangePassword.addActionListener(new ActionListener() {
@@ -132,6 +137,14 @@ public class CustomerView extends JFrame {
 		meatList.setFont(stockFont);
 		dairyList.setFont(stockFont);
 		bakeList.setFont(stockFont);
+		
+		Border lineBorder1 = BorderFactory.createLineBorder(Color.cyan, 1);
+		vegeList.setBorder(lineBorder1);
+		fruitList.setBorder(lineBorder1);
+		meatList.setBorder(lineBorder1);
+		dairyList.setBorder(lineBorder1);
+		bakeList.setBorder(lineBorder1);
+
 		
 		JLabel vegeLabel = new JLabel("Vegetables");
 		JLabel fruitLabel = new JLabel("Fruits");
@@ -233,10 +246,10 @@ public class CustomerView extends JFrame {
 		Font infoFont2 = new Font("Arial", Font.PLAIN, 20);
 
 		lnameTxt.setBounds(150, 477, 500, 100);
-		lbyWeightTxt.setBounds(310, 702, 500, 100);
+		lbyWeightTxt.setBounds(235, 702, 500, 100);
 		lstockTxt.setBounds(150, 627, 500, 100);
 		lpriceTxt.setBounds(150, 553, 500, 100);
-
+		
 		lnameTxt.setFont(infoFont2);
 		lbyWeightTxt.setFont(infoFont2);
 		lstockTxt.setFont(infoFont2);
@@ -443,6 +456,17 @@ public class CustomerView extends JFrame {
 		buyMessage.setForeground(Color.red);
 		contentPane.add(buyMessage);
 		
+
+		
+		JLabel balance = new JLabel("0.00$");
+		if (loginManager.getCurrentUser() != null) {
+			balance.setText(String.valueOf(balanceFormat.format(loginManager.getCurrentUser().getBalance())));
+		}
+		balance.setBounds(760, 570, 300, 200);
+		balance.setFont(new Font("Arial", Font.BOLD, 80));
+		contentPane.add(balance);
+		
+
 		
 		buy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -453,7 +477,152 @@ public class CustomerView extends JFrame {
 					buyMessage.setText("Enter a number");
 				}
 				
+				int amt = Integer.parseInt(amount.getText());
 				
+				
+				if (vegeList.getSelectedIndex() != -1) {
+					int lim = stockManager.getVegetables().get(vegeList.getSelectedIndex()).getStock();
+					double prc = stockManager.getVegetables().get(vegeList.getSelectedIndex()).getPrice() * amt;
+					
+					if (prc > loginManager.getCurrentUser().getBalance()) {
+						buyMessage.setText("Monetary Limitation");
+					}
+					
+					else if (amt > lim) {
+						buyMessage.setText("Stock limitation");
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Thank you for your purchase!");
+						stockManager.incrementVegeCounter();
+						stockManager.updateSales(prc);
+						double bal = loginManager.getCurrentUser().getBalance();
+						loginManager.getCurrentUser().setBalance(bal - prc);
+						balance.setText(String.valueOf(balanceFormat.format(loginManager.getCurrentUser().getBalance())));
+						if (amt == lim) {
+							stockManager.removeFoodByIndex(vegeList.getSelectedIndex(), "Vegetable");
+							vegeModel.removeElementAt(vegeList.getSelectedIndex());
+						}
+						else {
+							stockManager.getVegetables().get(vegeList.getSelectedIndex()).setStock(lim - amt);
+							lstockTxt.setText(String.valueOf(stockManager.getVegetables().get(vegeList.getSelectedIndex()).getStock()));
+						}
+					}
+				}
+				else if (fruitList.getSelectedIndex() != -1) {
+					int lim = stockManager.getFruits().get(fruitList.getSelectedIndex()).getStock();
+					double prc = stockManager.getFruits().get(fruitList.getSelectedIndex()).getPrice() * amt;
+					
+					if (prc > loginManager.getCurrentUser().getBalance()) {
+						buyMessage.setText("Monetary Limitation");
+					}
+					
+					else if (amt > lim) {
+						buyMessage.setText("Stock limitation");
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Thank you for your purchase!");
+						stockManager.incrementFruitCounter();
+						stockManager.updateSales(prc);
+						double bal = loginManager.getCurrentUser().getBalance();
+						loginManager.getCurrentUser().setBalance(bal - prc);
+						balance.setText(String.valueOf(balanceFormat.format(loginManager.getCurrentUser().getBalance())));
+						if (amt == lim) {
+							stockManager.removeFoodByIndex(fruitList.getSelectedIndex(), "Fruit");
+							fruitModel.removeElementAt(fruitList.getSelectedIndex());
+						}
+						else {
+							stockManager.getFruits().get(fruitList.getSelectedIndex()).setStock(lim - amt);
+							lstockTxt.setText(String.valueOf(stockManager.getFruits().get(fruitList.getSelectedIndex()).getStock()));
+						}
+					}
+				}
+				else if (meatList.getSelectedIndex() != -1) {
+					int lim = stockManager.getMeats().get(meatList.getSelectedIndex()).getStock();
+					double prc = stockManager.getMeats().get(meatList.getSelectedIndex()).getPrice() * amt;
+					
+					if (prc > loginManager.getCurrentUser().getBalance()) {
+						buyMessage.setText("Monetary Limitation");
+					}
+					
+					else if (amt > lim) {
+						buyMessage.setText("Stock limitation");
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Thank you for your purchase!");
+						stockManager.incrementMeatCounter();
+						stockManager.updateSales(prc);
+						double bal = loginManager.getCurrentUser().getBalance();
+						loginManager.getCurrentUser().setBalance(bal - prc);
+						balance.setText(String.valueOf(balanceFormat.format(loginManager.getCurrentUser().getBalance())));
+						if (amt == lim) {
+							stockManager.removeFoodByIndex(meatList.getSelectedIndex(), "Meat");
+							meatModel.removeElementAt(meatList.getSelectedIndex());
+						}
+						else {
+							stockManager.getMeats().get(meatList.getSelectedIndex()).setStock(lim - amt);
+							lstockTxt.setText(String.valueOf(stockManager.getMeats().get(meatList.getSelectedIndex()).getStock()));
+						}
+					}
+				}
+				else if (dairyList.getSelectedIndex() != -1) {
+					int lim = stockManager.getDairy().get(dairyList.getSelectedIndex()).getStock();
+					double prc = stockManager.getDairy().get(dairyList.getSelectedIndex()).getPrice() * amt;
+					
+					if (prc > loginManager.getCurrentUser().getBalance()) {
+						buyMessage.setText("Monetary Limitation");
+					}
+					
+					else if (amt > lim) {
+						buyMessage.setText("Stock limitation");
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Thank you for your purchase!");
+						stockManager.incrementDairyCounter();
+						stockManager.updateSales(prc);
+						double bal = loginManager.getCurrentUser().getBalance();
+						loginManager.getCurrentUser().setBalance(bal - prc);
+						balance.setText(String.valueOf(balanceFormat.format(loginManager.getCurrentUser().getBalance())));
+						if (amt == lim) {
+							stockManager.removeFoodByIndex(dairyList.getSelectedIndex(), "Dairy");
+							dairyModel.removeElementAt(dairyList.getSelectedIndex());
+						}
+						else {
+							stockManager.getDairy().get(dairyList.getSelectedIndex()).setStock(lim - amt);
+							lstockTxt.setText(String.valueOf(stockManager.getDairy().get(dairyList.getSelectedIndex()).getStock()));
+						}
+					}
+				}
+				else if (bakeList.getSelectedIndex() != -1) {
+					int lim = stockManager.getBakery().get(bakeList.getSelectedIndex()).getStock();
+					double prc = stockManager.getBakery().get(bakeList.getSelectedIndex()).getPrice() * amt;
+					
+					if (prc > loginManager.getCurrentUser().getBalance()) {
+						buyMessage.setText("Monetary Limitation");
+					}
+					
+					else if (amt > lim) {
+						buyMessage.setText("Stock limitation");
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Thank you for your purchase!");
+						stockManager.incrementBakeCounter();
+						stockManager.updateSales(prc);
+						double bal = loginManager.getCurrentUser().getBalance();
+						loginManager.getCurrentUser().setBalance(bal - prc);
+						balance.setText(String.valueOf(balanceFormat.format(loginManager.getCurrentUser().getBalance())));
+						if (amt == lim) {
+							stockManager.removeFoodByIndex(bakeList.getSelectedIndex(), "Bakery");
+							bakeModel.removeElementAt(bakeList.getSelectedIndex());
+						}
+						else {
+							stockManager.getBakery().get(bakeList.getSelectedIndex()).setStock(lim - amt);
+							lstockTxt.setText(String.valueOf(stockManager.getBakery().get(bakeList.getSelectedIndex()).getStock()));
+						}
+					}
+				}
+				else {
+					buyMessage.setText("Select an item");
+				}
 				
 			}
 				
@@ -477,13 +646,7 @@ public class CustomerView extends JFrame {
 		marketBalance.setFont(new Font("SansSerif", Font.PLAIN, 40));
 		contentPane.add(marketBalance);
 		
-		JLabel balance = new JLabel("0.00$");
-		if (loginManager.getCurrentUser() != null) {
-			balance.setText(String.valueOf(loginManager.getCurrentUser().getBalance()));
-		}
-		balance.setBounds(760, 570, 300, 200);
-		balance.setFont(new Font("Arial", Font.BOLD, 80));
-		contentPane.add(balance);
+		
 		
 		JButton sep7 = new JButton();
 		sep7.setBounds(760, 730, 270, 2);
@@ -509,6 +672,8 @@ public class CustomerView extends JFrame {
 		donut.setIcon(new ImageIcon(MainFrame.class.getResource("/market/ui/donut.png")));
 		donut.setBounds(1135, 450, 400, 400);
 		contentPane.add(donut);
+		
+
 		
 	}
 }

@@ -51,7 +51,7 @@ public class CustomerView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CustomerView() {   
+	public CustomerView() {    
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

@@ -1,5 +1,8 @@
 package market.stock;
 
+/**
+ * The parent class of all five food categories and oversees the creation of all their objects
+ */
 public class Food {
 	
 	private String name;
@@ -47,6 +50,7 @@ public class Food {
 	
 	
 	public double getPrice() {
+		// makes it two decimal places
 		return Math.round(price * 100.00) / 100.00;
 	}
 	public boolean getByWeight() {

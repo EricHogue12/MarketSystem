@@ -1,6 +1,8 @@
 package market.stock;
 
-
+/**
+ * Vegetable food category 
+ */
 public class Vegetable extends Food {
 	
 	public static int vegetableCounter = 0;

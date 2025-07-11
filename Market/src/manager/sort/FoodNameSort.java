@@ -4,9 +4,14 @@ import java.util.ArrayList;
 
 import market.stock.Food;
 
-
+/**
+ * Uses the ISort interface to sort foods by their name in alphabetical order (A in front, Z in back)
+ */
 public class FoodNameSort implements ISort {
 
+	/**
+	 * Sorts the ArrayList passed based on food name using selection sort algorithm
+	 */
 	public void sort(ArrayList<Food> foods){
 		for (int i = 0; i < foods.size() - 1; i++) {
 			int minIndex = i;
@@ -25,6 +30,9 @@ public class FoodNameSort implements ISort {
 		}
 	}
 	
+	/**
+	 * Makes sure there are no duplicate food names
+	 */
 	public void omitDuplicates(ArrayList<Food> foods){
 		for (int i = 0; i < foods.size(); i++) {
 			for (int j = i + 1; j < foods.size(); j++) {

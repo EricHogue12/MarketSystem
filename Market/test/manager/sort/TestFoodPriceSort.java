@@ -10,9 +10,14 @@ import market.stock.Food;
 import market.stock.Fruit;
 import market.stock.Vegetable;
 
-
+/**
+ * Tests the FoodPriceSort class
+ */
 public class TestFoodPriceSort {
 
+	/**
+	 * Tests sort method
+	 */
 	@Test
 	public void testSort() {
 		ArrayList<Food> foods = new ArrayList<Food>();
@@ -32,6 +37,9 @@ public class TestFoodPriceSort {
 		assertEquals("Watermelon", foods.get(4).getName());
 	}
 	
+	/**
+	 * Tests omitDuplicates method
+	 */
 	@Test
 	public void testOmitDuplicates() {
 		ArrayList<Food> foods = new ArrayList<Food>();

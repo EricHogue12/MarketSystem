@@ -1,15 +1,21 @@
 package market.login;
 
+/**
+ * Superclass for the Manager and Customer class and helps with login functionality
+ */
 // Each user should have a unique user name
 public class User {
 	
 	private String firstName;
 	private String lastName;
+	// unique for each user
 	private String username;
 	private String password;
 	private double balance;
+	// for checking which customer has spent the most
 	private double initialBalance;
 	
+	//User constructor
 	public User(String firstName, String lastName, String username, String password, double balance) {
 		if (Customer.customerCounter >= Customer.MAX_CUSTOMERS) {
 			throw new IllegalArgumentException("Customer limit reached");

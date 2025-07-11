@@ -899,6 +899,7 @@ public class ManagerView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (customerList.getSelectedIndex() != -1 && listModel.getSize() != 0) {
 					loginManager.deleteCustomer(customerList.getSelectedValue());
+					t1Customer.setText(loginManager.getBestCustomer());
 					int idx = customerList.getSelectedIndex();
 					firstNameList.remove(idx);
 					lastNameList.remove(idx);

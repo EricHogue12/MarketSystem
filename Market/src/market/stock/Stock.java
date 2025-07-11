@@ -7,12 +7,17 @@ import manager.sort.FoodPriceSort;
 import manager.sort.FoodStockSort;
 
 
-
+/**
+ * Singleton class that interacts with GUI and provides methods for the manager to modify the market inventory
+ * and for the customers to actually buy the stuff
+ */
 public class Stock {
 	
 	private static Stock instance;
 	private ArrayList<Food> foods;
+	// for determining total sales
 	private double sales;
+	// these are for determining which is the most bought food category
 	private int vegeCounter;
 	private int fruitCounter;
 	private int meatCounter;
@@ -24,6 +29,7 @@ public class Stock {
 		sales = 0.0;
 	}
 	
+	// initializes the Stock class to interact with GUI
 	public static synchronized Stock getInstance() {
 		if (instance == null) {
 			instance = new Stock();
